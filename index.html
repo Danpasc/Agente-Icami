@@ -1,71 +1,25 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Botón Asistente Virtual</title>
-    <style>
-        /* Estilo del botón simulado */
-        #fakeButton {
-            background-color: #007bff; /* Azul Shift */
-            color: white;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            z-index: 9999; /* Asegura que el botón esté encima */
-        }
+<script>
+  var vapiInstance = null;
+  const assistant = "680b050a-e8b3-4321-9bad-94c7bc886a28"; // Substitute with your assistant ID
+  const apiKey = "2bfd5f2a-c8f3-417e-82b4-b225876a2163"; // Substitute with your Public key from Vapi Dashboard.
+  const buttonConfig = {}; // Modify this as required
 
-        #fakeButton:hover {
-            background-color: #0056b3;
-        }
-    </style>
-</head>
-<body>
+  (function (d, t) {
+    var g = document.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    g.src =
+      "https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js";
+    g.defer = true;
+    g.async = true;
+    s.parentNode.insertBefore(g, s);
 
-    <!-- Botón simulado encima del botón original -->
-    <div id="fakeButton">Habla con nuestro asistente virtual</div>
+    g.onload = function () {
+      vapiInstance = window.vapiSDK.run({
+        apiKey: apiKey, // mandatory
+        assistant: assistant, // mandatory
+        config: buttonConfig, // optional
+      });
+    };
+  })(document, "script");
 
-    <script>
-        var vapiInstance = null;
-        const assistant = "680b050a-e8b3-4321-9bad-94c7bc886a28"; // Assistant ID
-        const apiKey = "2bfd5f2a-c8f3-417e-82b4-b225876a2163"; // Public key from Vapi Dashboard.
-        const buttonConfig = {}; // Configuración adicional
-
-        // Inicialización del SDK VAPI
-        (function (d, t) {
-            var g = document.createElement(t),
-                s = d.getElementsByTagName(t)[0];
-            g.src = "https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js";
-            g.defer = true;
-            g.async = true;
-            s.parentNode.insertBefore(g, s);
-
-            g.onload = function () {
-                vapiInstance = window.vapiSDK.run({
-                    apiKey: apiKey,
-                    assistant: assistant,
-                    config: buttonConfig,
-                });
-
-                // Agregar el evento de clic al botón simulado
-                document.getElementById("fakeButton").addEventListener("click", function () {
-                    // Simular clic en el botón real de VAPI
-                    const realButton = document.querySelector('.vapi-button');
-                    if (realButton) {
-                        realButton.click();
-                    } else {
-                        alert("El botón del asistente aún no se ha cargado.");
-                    }
-                });
-            };
-        })(document, "script");
-    </script>
-</body>
-</html>
+</script>
