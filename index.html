@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Botón Asistente Virtual</title>
     <style>
-        /* Estilo del botón */
+        /* Estilo del botón VAPI existente */
         .vapi-button {
             background-color: #007bff; /* Azul Shift */
             color: white;
@@ -27,14 +27,25 @@
     </style>
 </head>
 <body>
-    <!-- Botón centrado -->
-    <button id="assistantButton" class="vapi-button">Habla con nuestro asistente virtual</button>
+
+    <!-- Botón generado por el SDK -->
+    <div id="assistantContainer"></div>
 
     <script>
         var vapiInstance = null;
         const assistant = "680b050a-e8b3-4321-9bad-94c7bc886a28"; // Assistant ID
         const apiKey = "2bfd5f2a-c8f3-417e-82b4-b225876a2163"; // Public key from Vapi Dashboard.
-        const buttonConfig = {}; // Configuración adicional
+        const buttonConfig = {
+            buttonText: "Habla con nuestro asistente virtual",
+            style: {
+                backgroundColor: "#007bff",
+                color: "white",
+                padding: "15px 30px",
+                borderRadius: "8px",
+                fontSize: "18px",
+                fontWeight: "bold",
+            }
+        };
 
         // Inicialización del SDK VAPI
         (function (d, t) {
@@ -47,14 +58,9 @@
 
             g.onload = function () {
                 vapiInstance = window.vapiSDK.run({
-                    apiKey: apiKey, // obligatorio
-                    assistant: assistant, // obligatorio
-                    config: buttonConfig, // opcional
-                });
-
-                // Asignación de evento al botón para activar el asistente
-                document.getElementById("assistantButton").addEventListener("click", function () {
-                    vapiInstance.open(); // Abre el asistente al hacer clic
+                    apiKey: apiKey,
+                    assistant: assistant,
+                    config: buttonConfig,
                 });
             };
         })(document, "script");
