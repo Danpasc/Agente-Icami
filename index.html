@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Botón Asistente Virtual</title>
+    <style>
+        /* Estilo del botón */
+        .vapi-button {
+            background-color: #007bff; /* Azul Shift */
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .vapi-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <!-- Botón centrado -->
+    <button id="assistantButton" class="vapi-button">Habla con nuestro asistente virtual</button>
+
+    <script>
+        var vapiInstance = null;
+        const assistant = "680b050a-e8b3-4321-9bad-94c7bc886a28"; // Assistant ID
+        const apiKey = "2bfd5f2a-c8f3-417e-82b4-b225876a2163"; // Public key from Vapi Dashboard.
+        const buttonConfig = {}; // Configuración adicional
+
+        // Inicialización del SDK VAPI
+        (function (d, t) {
+            var g = document.createElement(t),
+                s = d.getElementsByTagName(t)[0];
+            g.src = "https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js";
+            g.defer = true;
+            g.async = true;
+            s.parentNode.insertBefore(g, s);
+
+            g.onload = function () {
+                vapiInstance = window.vapiSDK.run({
+                    apiKey: apiKey, // obligatorio
+                    assistant: assistant, // obligatorio
+                    config: buttonConfig, // opcional
+                });
+
+                // Asignación de evento al botón para activar el asistente
+                document.getElementById("assistantButton").addEventListener("click", function () {
+                    vapiInstance.open(); // Abre el asistente al hacer clic
+                });
+            };
+        })(document, "script");
+    </script>
+</body>
+</html>
